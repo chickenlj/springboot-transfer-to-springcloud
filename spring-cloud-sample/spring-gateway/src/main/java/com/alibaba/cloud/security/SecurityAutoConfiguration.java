@@ -21,12 +21,9 @@ import java.util.concurrent.CountDownLatch;
 
 import com.alibaba.cloud.security.trust.TlsModeListener;
 import com.alibaba.cloud.security.trust.TrustSslStoreProvider;
-import com.alibaba.cloud.security.trust.auth.SentinelTrustInterceptor;
-import com.alibaba.cloud.security.trust.auth.TrustWebMvcConfigurer;
 import com.alibaba.cloud.security.trust.rest.ClientRequestFactoryProvider;
 import com.alibaba.cloud.security.trust.rest.TrustRestBeanPostProcessor;
 import com.alibaba.cloud.security.trust.rest.TrustRestTemplateCallback;
-import com.alibaba.cloud.security.trust.tomcat.TrustTomcatConnectCustomizer;
 import com.alibaba.csp.sentinel.datasource.xds.XdsDataSource;
 import com.alibaba.csp.sentinel.datasource.xds.config.XdsConfigProperties;
 import com.alibaba.csp.sentinel.datasource.xds.constant.type.AsymCryptoType;
@@ -130,7 +127,7 @@ public class SecurityAutoConfiguration {
 //	public SentinelTrustInterceptor trustSentinelInterceptor() {
 //		return new SentinelTrustInterceptor();
 //	}
-
+//
 //	@Bean
 //	@ConditionalOnClass(XdsConfigProperties.class)
 //	public TrustWebMvcConfigurer xdsWebMvcConfigurer(SentinelTrustInterceptor sentinelTrustInterceptor) {

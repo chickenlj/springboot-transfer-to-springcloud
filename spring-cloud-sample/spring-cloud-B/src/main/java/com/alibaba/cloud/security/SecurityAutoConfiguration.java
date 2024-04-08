@@ -125,23 +125,23 @@ public class SecurityAutoConfiguration {
 	}
 
 
-//	@Bean
-//	@ConditionalOnClass(XdsConfigProperties.class)
-//	public SentinelTrustInterceptor trustSentinelInterceptor() {
-//		return new SentinelTrustInterceptor();
-//	}
+	@Bean
+	@ConditionalOnClass(XdsConfigProperties.class)
+	public SentinelTrustInterceptor trustSentinelInterceptor() {
+		return new SentinelTrustInterceptor();
+	}
 
-//	@Bean
-//	@ConditionalOnClass(XdsConfigProperties.class)
-//	public TrustWebMvcConfigurer xdsWebMvcConfigurer(SentinelTrustInterceptor sentinelTrustInterceptor) {
-//		return new TrustWebMvcConfigurer(sentinelTrustInterceptor);
-//	}
+	@Bean
+	@ConditionalOnClass(XdsConfigProperties.class)
+	public TrustWebMvcConfigurer xdsWebMvcConfigurer(SentinelTrustInterceptor sentinelTrustInterceptor) {
+		return new TrustWebMvcConfigurer(sentinelTrustInterceptor);
+	}
 
-//	@Bean
-//	@ConditionalOnClass(XdsConfigProperties.class)
-//	public TomcatConnectorCustomizer mtlsCustomizer(TrustSslStoreProvider sslStoreProvider, XdsDataSource xdsDataSource) {
-//		return new TrustTomcatConnectCustomizer(sslStoreProvider);
-//	}
+	@Bean
+	@ConditionalOnClass(XdsConfigProperties.class)
+	public TomcatConnectorCustomizer mtlsCustomizer(TrustSslStoreProvider sslStoreProvider, XdsDataSource xdsDataSource) {
+		return new TrustTomcatConnectCustomizer(sslStoreProvider);
+	}
 
 	@Bean
 	@ConditionalOnClass(XdsConfigProperties.class)
