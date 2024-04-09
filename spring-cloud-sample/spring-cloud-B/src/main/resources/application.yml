@@ -16,4 +16,4 @@ spring:
       initAwaitTimeS: 6000
     nacos:
       discovery: #启用 spring cloud nacos discovery
-        server-addr: 127.0.0.1:8848
+        server-addr: mse-a8813c814-p.nacos-ans.mse.aliyuncs.com
