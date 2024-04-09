@@ -5,7 +5,7 @@ FROM openjdk:17
 WORKDIR /build
 COPY . /build
 
-RUN ./mvnw clean package -U
+RUN ./mvnw clean package
 
 # JAR file will be specified by passing in a build time argument to docker build
 ARG APP_FILE
