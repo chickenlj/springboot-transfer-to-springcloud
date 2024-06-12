@@ -139,62 +139,45 @@ public class IstioCertManager extends AbstractCertManager {
                 xdsConfigProperties.getCaAddr());
             Metadata header = createHeader(xdsConfigProperties.getIstiodToken(), xdsConfigProperties.getClusterId());
 
-            IstioCertificateServiceGrpc.IstioCertificateServiceStub stub = IstioCertificateServiceGrpc
-                .newStub(channel);
+            IstioCertificateServiceGrpc.IstioCertificateServiceBlockingStub stub = IstioCertificateServiceGrpc
+                .newBlockingStub(channel);
             stub = MetadataUtils.attachHeaders(stub, header);
             final CountDownLatch countDownLatch = new CountDownLatch(1);
 
             long certExpireTime = System.currentTimeMillis() + xdsConfigProperties.getCertValidityTimeS() * 1000;
-            stub.createCertificate(
-                IstioCertificateRequest.newBuilder().setCsr(csr)
-                    .setValidityDuration(xdsConfigProperties.getCertValidityTimeS())
-                    .build(),
-                new StreamObserver<IstioCertificateResponse>() {
-                    @Override
-                    public void onNext(
-                        IstioCertificateResponse istioCertificateResponse) {
-                        final int n = istioCertificateResponse.getCertChainCount();
-                        List<Certificate> certificates = new ArrayList<>();
-                        StringBuilder certChainRaw = new StringBuilder();
 
-                        for (int i = 0; i < n; ++i) {
-                            String rawCert = istioCertificateResponse.getCertChain(i);
-                            certChainRaw.append(rawCert);
-                            certificates.add(CertificateUtil.loadCertificate(rawCert));
-                        }
-
-                        newCertPair.setExpireTime(certExpireTime);
-                        newCertPair.setRawCertificateChain(certChainRaw.toString().getBytes(StandardCharsets.UTF_8));
-                        newCertPair.setCertificateChain(certificates.toArray(new Certificate[certificates.size()]));
-                        RecordLog.info("[XdsDataSource] Send CSR to CA successfully", n);
-                        countDownLatch.countDown();
-                    }
-
-                    @Override
-                    public void onError(Throwable throwable) {
-                        RecordLog.info("[XdsDataSource] Send CSR to CA error", throwable);
-                        countDownLatch.countDown();
-                    }
-
-                    @Override
-                    public void onCompleted() {
-                        if (countDownLatch.getCount() > 0) {
-                            countDownLatch.countDown();
-                        }
-                    }
-                });
             try {
-                countDownLatch.await(xdsConfigProperties.getGetCertTimeoutS(), TimeUnit.SECONDS);
-            } catch (InterruptedException e) {
-                RecordLog.error("[XdsDataSource] Wait for cert failed.", e);
+                IstioCertificateResponse response = stub.createCertificate(IstioCertificateRequest.newBuilder()
+                        .setCsr(csr)
+                        .setValidityDuration(xdsConfigProperties.getCertValidityTimeS())
+                        .build());
+                final int n = response.getCertChainCount();
+                List<Certificate> certificates = new ArrayList<>();
+                StringBuilder certChainRaw = new StringBuilder();
+
+                for (int i = 0; i < n; ++i) {
+                    String rawCert = response.getCertChain(i);
+                    certChainRaw.append(rawCert);
+                    certificates.add(CertificateUtil.loadCertificate(rawCert));
+                }
+
+                newCertPair.setExpireTime(certExpireTime);
+                newCertPair.setRawCertificateChain(certChainRaw.toString().getBytes(StandardCharsets.UTF_8));
+                newCertPair.setCertificateChain(certificates.toArray(new Certificate[certificates.size()]));
+                RecordLog.info("[XdsDataSource] Send CSR to CA successfully", n);
+            } catch (Exception e) {
+                e.printStackTrace();
+                RecordLog.info("[XdsDataSource] Send CSR to CA failed", e);
             } finally {
                 channel.shutdown();
             }
+
             if (0 == newCertPair.getExpireTime()) {
                 return null;
             }
             return newCertPair;
         } catch (Exception e) {
+            e.printStackTrace();
             RecordLog.error("[XdsDataSource] Unable to get cert pair", e);
         }
         return null;
