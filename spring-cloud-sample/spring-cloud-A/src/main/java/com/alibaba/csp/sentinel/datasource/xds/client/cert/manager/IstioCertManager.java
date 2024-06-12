@@ -44,6 +44,7 @@ import io.grpc.ManagedChannel;
 import io.grpc.Metadata;
 import io.grpc.netty.shaded.io.grpc.netty.GrpcSslContexts;
 import io.grpc.netty.shaded.io.grpc.netty.NettyChannelBuilder;
+import io.grpc.netty.shaded.io.netty.channel.ChannelOption;
 import io.grpc.netty.shaded.io.netty.handler.ssl.SslContext;
 import io.grpc.netty.shaded.io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import io.grpc.stub.MetadataUtils;
@@ -105,7 +106,7 @@ public class IstioCertManager extends AbstractCertManager {
                     .trustManager(InsecureTrustManagerFactory.INSTANCE)
                     .build();
             }
-            channel = NettyChannelBuilder.forTarget(caAddr)
+            channel = NettyChannelBuilder.forTarget(caAddr).withOption(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
                 .sslContext(sslContext)
                 .build();
 
