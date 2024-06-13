@@ -87,6 +87,8 @@ public class TlsModeLdsFilter extends AbstractLdsFilter {
             }
         }
 
+        System.out.println("newTlsMode: " + newTlsMode);
+
         tlsModeRepository.update(newTlsMode);
         return true;
     }
