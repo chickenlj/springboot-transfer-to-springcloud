@@ -298,15 +298,36 @@ public class XdsConfigProperties {
     }
 
     public String getCaCert() {
-        File caFile = new File(caCertPath);
-        if (caFile.canRead()) {
-            try {
-                return FileUtil.readFileToString(caFile, StandardCharsets.UTF_8);
-            } catch (IOException e) {
-                RecordLog.error("[XdsDataSource] read ca file error", e);
-            }
-        }
-        return null;
+      return "-----BEGIN CERTIFICATE-----\n"
+          + "MIIC/TCCAeWgAwIBAgIRAIJThyjFM4cc26qubCU3kLMwDQYJKoZIhvcNAQELBQAw\n"
+          + "GDEWMBQGA1UEChMNY2x1c3Rlci5sb2NhbDAeFw0yNDA2MDcwNTQwNTdaFw0zNDA2\n"
+          + "MDUwNTQwNTdaMBgxFjAUBgNVBAoTDWNsdXN0ZXIubG9jYWwwggEiMA0GCSqGSIb3\n"
+          + "DQEBAQUAA4IBDwAwggEKAoIBAQDVfh3XOCe+2npr5fdAfgs5H4ZuMwA1xm6cXjVM\n"
+          + "4/g1FljVAdlpYGM3ICli6w6uFmpLGuntE4znySFriB8uGF9xNCl3ttknYWqQqokH\n"
+          + "f8nxtNCaLKjuyhML2BZtZA66eboUFAG/oHt30LZ7IX3z6HNY36Zi7y1iMAS8i+fu\n"
+          + "HQXUF/MQMNIPs3nYJp7GSRiBTyEFdxqEeNWwqIm9cs4cNydGkWGp0r1RuqtZcyAr\n"
+          + "Wwy3cJFGiimsG5mjoIEDec0F0aoFdjXeDhA1ilWwCiVz6KzBYxf35jd2/ktN9mMP\n"
+          + "uFIlewydpj4luy6pqZamH40bOd1aIfgpbwEuyGA3gKpF9XojAgMBAAGjQjBAMA4G\n"
+          + "A1UdDwEB/wQEAwICBDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBTc9/zDeal+\n"
+          + "60ek8GXWKJm5C1abtTANBgkqhkiG9w0BAQsFAAOCAQEAwMwhP5Yw3roAZD+BXQZF\n"
+          + "lOFvXnCr0Sg2NgeYqY6hQ2K7fWza3JY2PXJzeu0b1jJRw6Ut0wmvnRli2rFvP7vQ\n"
+          + "zyhhRw2KGiGdfOABUd5Q/momEpkb2eS4n/GJJsy2C1TIuqRWloc+CrznIYbnF8LS\n"
+          + "OUAVzh622VcTveBUaW4JuShha2FwUyBtWOYcriwkjexZTP9dRHS43I9zX9Uiavkz\n"
+          + "LnbQhLM+4LA++g5pfF9DR+cjXLAjKJlozrytHffrpuK7w/wdsomGffeukM+Zj7Ce\n"
+          + "+w9RQaKDzn62iAv2oDeBwsxXGrvYNDlp9tZzT5nhetdbCr35JPTaN5Nd/w6iobni\n"
+          + "PQ==\n"
+          + "-----END CERTIFICATE-----";
+
+
+//        File caFile = new File(caCertPath);
+//        if (caFile.canRead()) {
+//            try {
+//                return FileUtil.readFileToString(caFile, StandardCharsets.UTF_8);
+//            } catch (IOException e) {
+//                RecordLog.error("[XdsDataSource] read ca file error", e);
+//            }
+//        }
+//        return null;
     }
 
     public String getNamespace() {
