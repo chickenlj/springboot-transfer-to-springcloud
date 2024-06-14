@@ -1,4 +1,0 @@
-org.springframework.context.ApplicationListener=\
-com.alibaba.cloud.security.trust.ApplicationPreparedEventListener
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.alibaba.cloud.security.SecurityAutoConfiguration

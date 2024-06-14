@@ -8,7 +8,7 @@ spring:
     name: service-b
   cloud:
     security:
-      open: true
+      open: false
       host: 192.168.50.62
       port: 15012
       caAddr: 192.168.50.62:15012
