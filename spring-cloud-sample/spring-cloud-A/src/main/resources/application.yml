@@ -5,13 +5,6 @@ spring:
   application:
     name: service-a #项目名称必填，在注册中心唯一；最好和之前域名保持一致，第四步会讲到原因
   cloud:
-    security:
-      open: true
-      host: gov-5b8e7feabd834061804e5386ef788397.gov.nacos-ans.mse.aliyuncs.com
-      port: 15012
-      caAddr: gov-5b8e7feabd834061804e5386ef788397.gov.nacos-ans.mse.aliyuncs.com:15012
-      initAwaitTimeS: 6000
-      cluster-id: "cf3eda8f7acfe453c980e2b6ace7bf01f"
     nacos:
       discovery: #启用 spring cloud nacos discovery
-        server-addr: mse-cce0e1c0-p.nacos-ans.mse.aliyuncs.com
+        server-addr: localhost:8848
