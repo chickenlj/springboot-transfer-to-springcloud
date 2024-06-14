@@ -107,6 +107,7 @@ public class IstioCertManager extends AbstractCertManager {
                     .build();
             }
             channel = NettyChannelBuilder.forTarget(caAddr).withOption(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
+                    .overrideAuthority("gov-5b8e7feabd834061804e5386ef788397.gov.nacos-ans.mse.aliyuncs.com")  // 用于覆盖期望的服务端主机名
                 .sslContext(sslContext)
                 .build();
 
