@@ -9,4 +9,4 @@ spring:
   cloud:
     nacos:
       discovery: #启用 spring cloud nacos discovery
-        server-addr: localhost:8848
+        server-addr: mse-5e117630-nacos-ans.mse.aliyuncs.com
