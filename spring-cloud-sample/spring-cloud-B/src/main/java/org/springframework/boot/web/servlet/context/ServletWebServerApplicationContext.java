@@ -162,8 +162,11 @@ public class ServletWebServerApplicationContext extends GenericWebApplicationCon
 		super.onRefresh();
 		try {
 			createWebServer();
-			String tlsMode = System.getProperty("mse.security.tls.mode");
-			if ("permissive".equalsIgnoreCase(tlsMode)) {
+			String mseTlsMode = System.getProperty("mse.security.demo.tls.mode");
+			if (mseTlsMode == null || mseTlsMode.isEmpty()) {
+				mseTlsMode = System.getProperty("mse.security.tls.mode");
+			}
+			if ("permissive".equalsIgnoreCase(mseTlsMode)) {
 				String rawTlsPort = System.getProperty("mse.security.tls.port");
 				if (rawTlsPort == null || rawTlsPort.isEmpty()) {
 					rawTlsPort = "18443";
@@ -213,8 +216,11 @@ public class ServletWebServerApplicationContext extends GenericWebApplicationCon
 			StartupStep createWebServer = this.getApplicationStartup().start("spring.boot.webserver.create");
 			ServletWebServerFactory factory = getWebServerFactory();
 
-			String tlsMode = System.getProperty("mse.security.tls.mode");
-			if ("strict".equalsIgnoreCase(tlsMode)) {
+			String mseTlsMode = System.getProperty("mse.security.demo.tls.mode");
+			if (mseTlsMode == null || mseTlsMode.isEmpty()) {
+				mseTlsMode = System.getProperty("mse.security.tls.mode");
+			}
+			if ("strict".equalsIgnoreCase(mseTlsMode)) {
 				AbstractConfigurableWebServerFactory webServerFactory = (AbstractConfigurableWebServerFactory) factory;
 				String rawTlsPort = System.getProperty("mse.security.tls.port");
 				if (rawTlsPort == null || rawTlsPort.isEmpty()) {

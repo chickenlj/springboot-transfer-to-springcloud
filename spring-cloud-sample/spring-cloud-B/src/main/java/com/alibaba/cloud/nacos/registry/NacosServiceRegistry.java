@@ -71,7 +71,10 @@ public class NacosServiceRegistry implements ServiceRegistry<Registration> {
 
 		Instance instance = getNacosInstanceFromRegistration(registration);
 
-		String mseTlsMode = System.getProperty("mse.security.tls.mode");
+		String mseTlsMode = System.getProperty("mse.security.demo.tls.mode");
+		if (mseTlsMode == null || mseTlsMode.isEmpty()) {
+			mseTlsMode = System.getProperty("mse.security.tls.mode");
+		}
 		String rawTlsPort = System.getProperty("mse.security.tls.port");
 		if (rawTlsPort == null || rawTlsPort.isEmpty()) {
 			rawTlsPort = "18443";
@@ -82,11 +85,10 @@ public class NacosServiceRegistry implements ServiceRegistry<Registration> {
 			instance.addMetadata("mseTlsPort", rawTlsPort);
 		} else if ("strict".equalsIgnoreCase(mseTlsMode)) {
 			int tlsPort = Integer.parseInt(rawTlsPort);
-			if (tlsPort != instance.getPort()) {
-				log.info("[Security] Port registered to nacos switched from {} to {}", instance.getPort(), tlsPort);
-				instance.setPort(tlsPort);
-				instance.addMetadata("mseTlsEnabled", "strict");
-			}
+			log.info("[Security] Port registered to nacos switched from {} to {}", instance.getPort(), tlsPort);
+			instance.setPort(tlsPort);
+			instance.addMetadata("mseTlsEnabled", "strict");
+			instance.addMetadata("mseTlsPort", rawTlsPort);
 		}
 
 
@@ -127,7 +129,6 @@ public class NacosServiceRegistry implements ServiceRegistry<Registration> {
 			return;
 		}
 
-		String mseTlsMode = System.getProperty("mse.security.tls.mode");
 		String rawTlsPort = System.getProperty("mse.security.tls.port");
 		if (rawTlsPort == null || rawTlsPort.isEmpty()) {
 			rawTlsPort = "18443";
