@@ -18,6 +18,7 @@ package com.example.springboota;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -27,11 +28,19 @@ public class AController {
 	@Autowired
 	private RestTemplate restTemplate;
 
+	@Autowired
+	private RestTemplate restTemplateWithoutLB;
+
 	private static final String SERVICE_PROVIDER_ADDRESS = "http://service-b";
 
 	@GetMapping("/test")
 	public String callServiceB() {
 		return restTemplate.getForObject(SERVICE_PROVIDER_ADDRESS +"/test-service-b", String.class);
+	}
+
+	@GetMapping("/test-without-lb")
+	public String callServiceBWithoutLB(@RequestParam String host) {
+		return restTemplateWithoutLB.getForObject("http://"  + host +":18001/test-service-b", String.class);
 	}
 
 }

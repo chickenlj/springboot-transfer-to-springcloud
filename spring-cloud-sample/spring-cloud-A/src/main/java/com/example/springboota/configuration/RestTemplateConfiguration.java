@@ -29,5 +29,10 @@ public class RestTemplateConfiguration {
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
+
+	@Bean
+	public RestTemplate restTemplateWithoutLB() {
+		return new RestTemplate();
+	}
 	
 }
